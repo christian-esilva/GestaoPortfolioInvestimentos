@@ -1,11 +1,10 @@
 ﻿using MediatR;
-using Xp.GestaoPortfolioInvestimentos.Application.UseCases.Clientes.Shared.Dtos;
 
 namespace Xp.GestaoPortfolioInvestimentos.Application.UseCases.Clientes.Adicionar.Dtos;
 
-public sealed record AdicionarClienteDto : ClienteDto, IRequest<ClienteAdicionadoDto>
+public sealed record AdicionarClienteDto : IRequest<ClienteAdicionadoDto>
 {
-    public AdicionarClienteDto(ClienteDto original) : base(original)
-    {
-    }
+    public string Nome { get; init; }
+    public string Email { get; init; }
+    public string Cpf { get; init; }
 }

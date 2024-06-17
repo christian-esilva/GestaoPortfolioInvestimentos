@@ -4,17 +4,17 @@ using Xp.GestaoPortfolioInvestimentos.Domain.ValueObjects;
 
 namespace Xp.GestaoPortfolioInvestimentos.Application.UseCases.Clientes.Adicionar.Validators
 {
-    internal class AdicionarClienteValidator : AbstractValidator<AdicionarClienteDto>
+    public class AdicionarClienteValidator : AbstractValidator<AdicionarClienteDto>
     {
         public AdicionarClienteValidator()
         {
             RuleFor(x => x.Cpf)
-                .Must(Cpf.EhCpfValido)
-                .WithMessage("Cpf inválido");
+                .NotEmpty().WithMessage("Cpf obrigatório")
+                .Length(11).WithMessage("Cpf deve ter exatamente 11 caracteres");
 
             RuleFor(x => x.Email)
-                .Must(Email.EhEmailValido)
-                .WithMessage("Email inválido");
+                .NotEmpty()
+                .WithMessage("Email obrigatório");
 
             RuleFor(x => x.Nome)
                 .NotEmpty()

@@ -7,6 +7,11 @@ using Xp.GestaoPortfolioInvestimentos.Infra.Repositorios;
 using Xp.GestaoPortfolioInvestimentos.Domain.Abstracoes;
 using Xp.GestaoPortfolioInvestimentos.Infra.Repositorios.Dapper;
 using Xp.GestaoPortfolioInvestimentos.Domain.Repositorios.Dapper;
+using Xp.GestaoPortfolioInvestimentos.Application.UseCases.Shared;
+using System.Reflection;
+using FluentValidation;
+using Xp.GestaoPortfolioInvestimentos.Application.UseCases.Clientes.Adicionar.Dtos;
+using Xp.GestaoPortfolioInvestimentos.Application.UseCases.Clientes.Adicionar.Validators;
 
 namespace Xp.GestaoPortfolioInvestimentos.Api.Extensions;
 
@@ -35,9 +40,16 @@ public static class DependencyInjection
         services.AddScoped<IProdutoInvestimentoRepositorio, ProdutoInvestimentoRepositorio>();
         services.AddScoped<IClienteRepositorioDapper, ClienteRepositorioDapper>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddTransient<IValidator<AdicionarClienteDto>, AdicionarClienteValidator>();
 
         var myhandlers = AppDomain.CurrentDomain.Load("Xp.GestaoPortfolioInvestimentos.Application");
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(myhandlers));
+        services.AddMediatR(cfg =>
+        {
+            cfg.RegisterServicesFromAssemblies(myhandlers);
+            cfg.AddOpenBehavior(typeof(ValidationBehaviour<,>));
+        });
+
+        services.AddValidatorsFromAssembly(Assembly.Load("Xp.GestaoPortfolioInvestimentos.Application"));
 
         return services;
     }

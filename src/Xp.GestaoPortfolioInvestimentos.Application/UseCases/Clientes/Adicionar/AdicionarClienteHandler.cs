@@ -16,11 +16,16 @@ public class AdicionarClienteHandler : IRequestHandler<AdicionarClienteDto, Clie
     private readonly IUnitOfWork _unitOfWork;
     private readonly IValidator<AdicionarClienteDto> _validator;
 
-    public AdicionarClienteHandler(IClienteRepositorio clienteRepositorio, IUnitOfWork unitOfWork, IValidator<AdicionarClienteDto> validator)
+    public AdicionarClienteHandler(
+        IClienteRepositorio clienteRepositorio, 
+        IUnitOfWork unitOfWork, 
+        IValidator<AdicionarClienteDto> validator, 
+        IClienteRepositorioDapper clienteRepositorioDapper)
     {
         _clienteRepositorio = clienteRepositorio;
         _unitOfWork = unitOfWork;
         _validator = validator;
+        _clienteRepositorioDapper = clienteRepositorioDapper;
     }
 
     public async Task<ClienteAdicionadoDto> Handle(AdicionarClienteDto request, CancellationToken cancellationToken)
@@ -28,8 +33,8 @@ public class AdicionarClienteHandler : IRequestHandler<AdicionarClienteDto, Clie
         _validator.ValidateAndThrow(request);
 
         var cliente = await _clienteRepositorioDapper.GetByCpfAsync(request.Cpf);
-        if (cliente is not null)
-            throw new ClienteNaoEncontradoException();
+        if (cliente is null)
+            throw new ClienteExistenteException();
 
         var novoCliente = new Cliente(request.Nome, request.Email, request.Cpf);
 
