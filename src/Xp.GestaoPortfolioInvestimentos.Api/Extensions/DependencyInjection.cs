@@ -34,7 +34,7 @@ public static class DependencyInjection
         services.AddScoped<IInvestimentoRepositorio, InvestimentoRepositorio>();
         services.AddScoped<IProdutoInvestimentoRepositorio, ProdutoInvestimentoRepositorio>();
         services.AddScoped<IClienteRepositorioDapper, ClienteRepositorioDapper>();
-        services.AddScoped<IUnityOfWork, UnityOfWork>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         var myhandlers = AppDomain.CurrentDomain.Load("Xp.GestaoPortfolioInvestimentos.Application");
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(myhandlers));

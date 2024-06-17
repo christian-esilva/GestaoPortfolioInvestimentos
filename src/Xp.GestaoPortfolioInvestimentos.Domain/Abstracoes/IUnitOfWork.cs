@@ -1,6 +1,6 @@
 ﻿namespace Xp.GestaoPortfolioInvestimentos.Domain.Abstracoes
 {
-    public interface IUnityOfWork : IDisposable
+    public interface IUnitOfWork : IDisposable
     {
         Task CommitAsync(CancellationToken cancellationToken);
     }

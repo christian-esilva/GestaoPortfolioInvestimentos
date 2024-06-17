@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Xp.GestaoPortfolioInvestimentos.Application.Exceptions
 {
-    public class ClienteExistenteException : Exception
+    public class ClienteNaoEncontradoException : Exception
     {
-        public ClienteExistenteException()
+        public ClienteNaoEncontradoException()
             : base($"Já existe um cliente cadastrado com esse Cpf.") { }
     }
 }

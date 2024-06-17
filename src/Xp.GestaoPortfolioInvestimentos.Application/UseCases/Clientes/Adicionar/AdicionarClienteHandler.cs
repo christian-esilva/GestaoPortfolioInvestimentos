@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using Xp.GestaoPortfolioInvestimentos.Application.Exceptions;
 using Xp.GestaoPortfolioInvestimentos.Application.UseCases.Clientes.Adicionar.Dtos;
 using Xp.GestaoPortfolioInvestimentos.Domain.Abstracoes;
@@ -12,19 +13,23 @@ public class AdicionarClienteHandler : IRequestHandler<AdicionarClienteDto, Clie
 {
     private readonly IClienteRepositorio _clienteRepositorio;
     private readonly IClienteRepositorioDapper _clienteRepositorioDapper;
-    private readonly IUnityOfWork _unitOfWork;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IValidator<AdicionarClienteDto> _validator;
 
-    public AdicionarClienteHandler(IClienteRepositorio clienteRepositorio, IUnityOfWork unitOfWork)
+    public AdicionarClienteHandler(IClienteRepositorio clienteRepositorio, IUnitOfWork unitOfWork, IValidator<AdicionarClienteDto> validator)
     {
         _clienteRepositorio = clienteRepositorio;
         _unitOfWork = unitOfWork;
+        _validator = validator;
     }
 
     public async Task<ClienteAdicionadoDto> Handle(AdicionarClienteDto request, CancellationToken cancellationToken)
     {
+        _validator.ValidateAndThrow(request);
+
         var cliente = await _clienteRepositorioDapper.GetByCpfAsync(request.Cpf);
         if (cliente is not null)
-            throw new ClienteExistenteException();
+            throw new ClienteNaoEncontradoException();
 
         var novoCliente = new Cliente(request.Nome, request.Email, request.Cpf);
 

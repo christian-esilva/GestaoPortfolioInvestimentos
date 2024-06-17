@@ -3,11 +3,11 @@ using Xp.GestaoPortfolioInvestimentos.Infra.Context;
 
 namespace Xp.GestaoPortfolioInvestimentos.Infra.Repositorios;
 
-public sealed class UnityOfWork : IUnityOfWork, IDisposable
+public sealed class UnitOfWork : IUnitOfWork, IDisposable
 {
     private readonly AppDbContext _context;
 
-    public UnityOfWork(AppDbContext context)
+    public UnitOfWork(AppDbContext context)
     {
         _context = context;
     }

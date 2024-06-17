@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Xp.GestaoPortfolioInvestimentos.Domain.Repositorios;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Xp.GestaoPortfolioInvestimentos.Application.UseCases.Clientes.Adicionar.Dtos;
 
 namespace Xp.GestaoPortfolioInvestimentos.Api.Controllers.v1;
 
@@ -7,19 +8,20 @@ namespace Xp.GestaoPortfolioInvestimentos.Api.Controllers.v1;
 [Route("v1/[controller]")]
 public class ClientesController : ControllerBase
 {
-    private readonly IClienteRepositorio _clienteRepositorio;
+    private readonly IMediator _mediator;
 
-    public ClientesController(IClienteRepositorio clienteRepositorio)
+    public ClientesController(IMediator mediator)
     {
-        _clienteRepositorio = clienteRepositorio;
+        _mediator = mediator;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetClientes()
+    [HttpPost]
+    public async Task<IActionResult> AdicionarCliente([FromBody] AdicionarClienteDto clienteDto)
     {
-        // TODO - usar mediator
-        // var clientes = await _clienteRepositorio.GetAllAsync();
-        // return Ok(clientes);
-        return Ok();
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var result = await _mediator.Send(clienteDto);
+        return CreatedAtAction(nameof(ClienteAdicionadoDto), new { id = result.Id }, result);
     }
 }
