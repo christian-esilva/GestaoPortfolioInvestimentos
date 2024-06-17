@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Xp.GestaoPortfolioInvestimentos.Domain\Xp.GestaoPortfolioInvestimentos.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<PackageReference Include="FluentValidation" Version="11.9.0" />
+	<PackageReference Include="MediatR" Version="12.2.0" />
+	<PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UseCases\Clientes\Alterar\" />
+    <Folder Include="UseCases\Clientes\ObterPorId\" />
+    <Folder Include="UseCases\Investimentos\Extrato\" />
+    <Folder Include="UseCases\Investimentos\Comprar\" />
+    <Folder Include="UseCases\Investimentos\Vender\" />
+    <Folder Include="UseCases\ProdutosInvestimentos\Adicionar\" />
+    <Folder Include="UseCases\ProdutosInvestimentos\Alterar\" />
+    <Folder Include="UseCases\ProdutosInvestimentos\ObterPorId\" />
+    <Folder Include="UseCases\ProdutosInvestimentos\ObterTodos\" />
+    <Folder Include="UseCases\ProdutosInvestimentos\Remover\" />
+  </ItemGroup>
+
+</Project>
