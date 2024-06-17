@@ -1,32 +1,35 @@
 ﻿using Xp.GestaoPortfolioInvestimentos.Domain.Entidades;
 using Xp.GestaoPortfolioInvestimentos.Domain.Repositorios;
+using Xp.GestaoPortfolioInvestimentos.Infra.Context;
 
 namespace Xp.GestaoPortfolioInvestimentos.Infra.Repositorios;
 
 public class InvestimentoRepositorio : IInvestimentoRepositorio
 {
-    public Task<Investimento> Compra(Guid id, decimal valor, CancellationToken cancellationToken)
+    protected readonly AppDbContext _appDbContext;
+
+    public InvestimentoRepositorio(AppDbContext db)
     {
-        throw new NotImplementedException();
+        _appDbContext = db;
     }
 
-    public Task<IEnumerable<Investimento>> ExtratoPorProduto(Guid produtoInvestimentoId, CancellationToken cancellationToken)
+    public async Task<Investimento> Compra(Investimento investimento)
     {
-        throw new NotImplementedException();
+        if (investimento == null)
+            throw new ArgumentNullException(nameof(investimento));
+
+        await _appDbContext.Investimentos.AddAsync(investimento);
+
+        return investimento;
     }
 
-    public Task<IEnumerable<Investimento>> GetAllAsync(CancellationToken cancellationToken)
+    public async Task<Investimento> Venda(Investimento investimento)
     {
-        throw new NotImplementedException();
-    }
+        if (investimento == null)
+            throw new ArgumentNullException(nameof(investimento));
 
-    public Task<Investimento> GetByIdAsync(Guid id)
-    {
-        throw new NotImplementedException();
-    }
+        _appDbContext.Investimentos.Update(investimento);
 
-    public Task<Investimento> Venda(Guid id, decimal valor, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
+        return investimento;
     }
 }

@@ -18,8 +18,6 @@
 
   <ItemGroup>
     <Folder Include="UseCases\Investimentos\Extrato\" />
-    <Folder Include="UseCases\Investimentos\Comprar\" />
-    <Folder Include="UseCases\Investimentos\Vender\" />
     <Folder Include="UseCases\ProdutosInvestimentos\Adicionar\" />
     <Folder Include="UseCases\ProdutosInvestimentos\Alterar\" />
     <Folder Include="UseCases\ProdutosInvestimentos\ObterPorId\" />

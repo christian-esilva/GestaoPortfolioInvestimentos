@@ -18,6 +18,7 @@ namespace Xp.GestaoPortfolioInvestimentos.Infra.Configurations
                 .HasColumnName("Email")
                 .IsRequired();
             });
+
             builder.OwnsOne(x => x.Cpf, cpf =>
             {
                 cpf.Property(x => x.Documento)

@@ -9,7 +9,7 @@ using Xp.GestaoPortfolioInvestimentos.Domain.Repositorios.Dapper;
 
 namespace Xp.GestaoPortfolioInvestimentos.Application.UseCases.Clientes.Adicionar;
 
-public class AdicionarClienteHandler : IRequestHandler<AdicionarClienteDto, ClienteAdicionadoDto>
+public sealed class AdicionarClienteHandler : IRequestHandler<AdicionarClienteDto, ClienteAdicionadoDto>
 {
     private readonly IClienteRepositorio _clienteRepositorio;
     private readonly IClienteRepositorioDapper _clienteRepositorioDapper;

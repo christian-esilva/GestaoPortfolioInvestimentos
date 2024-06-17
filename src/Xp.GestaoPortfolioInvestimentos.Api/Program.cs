@@ -3,8 +3,9 @@ using Xp.GestaoPortfolioInvestimentos.Api.Filter;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
+// Add services to the container.
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

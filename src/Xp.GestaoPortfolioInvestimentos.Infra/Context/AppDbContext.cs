@@ -10,7 +10,7 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<Cliente> Clientes { get; set; }
-    public DbSet<ProdutoInvestimento> Investimentos { get; set; }
+    public DbSet<Investimento> Investimentos { get; set; }
     public DbSet<ProdutoInvestimento> ProdutosInvestimentos { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

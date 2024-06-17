@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Xp.GestaoPortfolioInvestimentos.Application.Exceptions;
+using Xp.GestaoPortfolioInvestimentos.Domain.Validation;
 
 namespace Xp.GestaoPortfolioInvestimentos.Api.Filter
 {
@@ -39,6 +40,18 @@ namespace Xp.GestaoPortfolioInvestimentos.Api.Filter
             else if (context.Exception is ClienteExistenteException)
             {
                 context.Result = new StatusCodeResult(StatusCodes.Status422UnprocessableEntity);
+                context.ExceptionHandled = true;
+            }
+            else if (context.Exception is DomainValidation domainValidationException)
+            {
+                var errors = new List<string> { domainValidationException.Message };
+
+                var result = new ObjectResult(new { Errors = errors })
+                {
+                    StatusCode = StatusCodes.Status422UnprocessableEntity,
+                };
+
+                context.Result = result;
                 context.ExceptionHandled = true;
             }
         }

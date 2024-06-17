@@ -10,8 +10,6 @@ using Xp.GestaoPortfolioInvestimentos.Domain.Repositorios.Dapper;
 using Xp.GestaoPortfolioInvestimentos.Application.UseCases.Shared;
 using System.Reflection;
 using FluentValidation;
-using Xp.GestaoPortfolioInvestimentos.Application.UseCases.Clientes.Adicionar.Dtos;
-using Xp.GestaoPortfolioInvestimentos.Application.UseCases.Clientes.Adicionar.Validators;
 
 namespace Xp.GestaoPortfolioInvestimentos.Api.Extensions;
 
@@ -38,9 +36,10 @@ public static class DependencyInjection
         services.AddScoped<IClienteRepositorio, ClienteRepositorio>();
         services.AddScoped<IInvestimentoRepositorio, InvestimentoRepositorio>();
         services.AddScoped<IProdutoInvestimentoRepositorio, ProdutoInvestimentoRepositorio>();
+
         services.AddScoped<IClienteRepositorioDapper, ClienteRepositorioDapper>();
+        services.AddScoped<IInvestimentoRepositorioDapper, InvestimentoRepositorioDapper>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        services.AddTransient<IValidator<AdicionarClienteDto>, AdicionarClienteValidator>();
 
         var myhandlers = AppDomain.CurrentDomain.Load("Xp.GestaoPortfolioInvestimentos.Application");
         services.AddMediatR(cfg =>

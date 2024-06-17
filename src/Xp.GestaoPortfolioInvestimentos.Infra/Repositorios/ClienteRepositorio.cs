@@ -20,7 +20,6 @@ public class ClienteRepositorio : IClienteRepositorio
             throw new ArgumentNullException(nameof(cliente));
 
         await _appDbContext.Clientes.AddAsync(cliente);
-        await _appDbContext.SaveChangesAsync();
 
         return cliente;
     }

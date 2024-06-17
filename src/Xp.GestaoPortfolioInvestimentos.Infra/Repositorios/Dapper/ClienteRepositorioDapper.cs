@@ -2,6 +2,7 @@
 using System.Data;
 using Xp.GestaoPortfolioInvestimentos.Domain.Entidades;
 using Xp.GestaoPortfolioInvestimentos.Domain.Repositorios.Dapper;
+using Xp.GestaoPortfolioInvestimentos.Domain.ValueObjects;
 
 namespace Xp.GestaoPortfolioInvestimentos.Infra.Repositorios.Dapper
 {
@@ -24,7 +25,9 @@ namespace Xp.GestaoPortfolioInvestimentos.Infra.Repositorios.Dapper
         {
             string query = "SELECT * FROM portfolio_investimento.Cliente WHERE Cpf = @cpf";
 
-            var cliente = await _dbConnection.QueryFirstOrDefaultAsync<Cliente>(query, new { Cpf = cpf });
+            var result = await _dbConnection.QueryFirstOrDefaultAsync<Cliente>(query, new { Cpf = cpf });
+
+            var cliente = new Cliente(result.Id, result.Nome, result.Email.Endereco, result.Cpf.Documento);
 
             return cliente is null ? null : cliente;
         }

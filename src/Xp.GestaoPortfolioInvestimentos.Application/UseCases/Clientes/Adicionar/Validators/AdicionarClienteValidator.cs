@@ -19,6 +19,10 @@ namespace Xp.GestaoPortfolioInvestimentos.Application.UseCases.Clientes.Adiciona
             RuleFor(x => x.Nome)
                 .NotEmpty()
                 .WithMessage("Nome é obrigatório");
+
+            RuleFor(x => x.Saldo)
+                .NotEmpty()
+                .WithMessage("Saldo é obrigatório");
         }
     }
 }
